@@ -34,6 +34,13 @@ class Detector(object):
             _, ori_im = self.vdo.retrieve()
             im = ori_im[ymin:ymax, xmin:xmax, (2,1,0)]
             bbox_xywh, cls_conf, cls_ids = self.yolo3(im)
+            
+            #bbox_xyxy = torch.zeros_like(bbox_xywh, dtype=bbox_xywh.dtype)
+            #bbox_xyxy[0] = bbox_xywh[:,0]-bbox_xywh[:,2]/2
+            #bbox_xyxy[1] = bbox_xywh[:,1]-bbox_xywh[:,3]/2
+            #bbox_xyxy[2] = bbox_xywh[:,0]+bbox_xywh[:,2]/2
+            #bbox_xyxy[3] = bbox_xywh[:,1]+bbox_xywh[:,3]/2
+            
             if bbox_xywh is not None:
                 mask = cls_ids==0
                 bbox_xywh = bbox_xywh[mask]
